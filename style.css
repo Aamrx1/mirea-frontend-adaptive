@@ -1,4 +1,37 @@
-/* ===== Базовые стили (mobile-first: общие для всех экранов) ===== */
+/* =====================================================================
+   CSS-переменные (Custom Properties): цвета, шрифты, отступы.
+   Часть значений переопределяется в медиазапросах ниже.
+   ===================================================================== */
+:root {
+  /* Цвета */
+  --color-primary: #1d4ed8;
+  --color-primary-dark: #1e3a8a;
+  --color-accent: #7dd3fc;
+  --color-text: #1f2937;
+  --color-muted: #4b5563;
+  --color-bg: #ffffff;
+  --color-bg-alt: #f3f4f6;
+  --color-hero: #eff6ff;
+  --color-border: #e5e7eb;
+  --color-focus: #f59e0b;
+
+  /* Типографика в rem (относительно размера шрифта html) */
+  --font-base: 1rem;
+  /* clamp(минимум, «резиновое» значение от ширины окна, максимум) */
+  --font-h1: clamp(1.75rem, 1rem + 3.5vw, 3.25rem);
+  --font-h2: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  --font-h3: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+
+  /* Отступы и размеры (меняются на брейкпоинтах) */
+  --gap: 1rem;
+  --section-padding: 3rem;
+  --container-padding: 1rem;
+  --container-max: 75rem;
+  --header-height: 4rem;
+  --radius: 0.75rem;
+}
+
+/* ===== Базовые стили (общие для всех экранов) ===== */
 *,
 *::before,
 *::after {
@@ -7,24 +40,41 @@
 
 html {
   scroll-behavior: smooth;
+  /* Якорь не прячется под «липкой» шапкой */
+  scroll-padding-top: var(--header-height);
 }
 
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  font-size: 16px;
+  font-size: var(--font-base);
   line-height: 1.6;
-  color: #1f2937;
-  background: #ffffff;
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
 h1, h2, h3 {
   line-height: 1.2;
-  margin: 0 0 16px;
+  margin: 0 0 1rem;
+}
+
+h2 { font-size: var(--font-h2); }
+h3 { font-size: var(--font-h3); }
+
+p {
+  margin: 0 0 1em;
 }
 
 a {
-  color: #1d4ed8;
+  color: var(--color-primary);
+}
+
+/* Видимый фокус для навигации с клавиатуры (только при управлении с клавиатуры) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
 }
 
 /* Адаптивные изображения: никогда не шире контейнера, высота по пропорциям */
@@ -36,9 +86,9 @@ img {
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 var(--container-padding);
 }
 
 .visually-hidden {
@@ -55,7 +105,7 @@ img {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #1e3a8a;
+  background: var(--color-primary-dark);
   color: #fff;
 }
 
@@ -64,18 +114,19 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 64px;
+  min-height: var(--header-height);
 }
 
 .logo {
   color: #fff;
-  font-size: 22px;
+  /* clamp(): логотип плавно растёт от 1.25rem до 1.5rem */
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.5rem);
   font-weight: 700;
   text-decoration: none;
 }
 
 .logo span {
-  color: #7dd3fc;
+  color: var(--color-accent);
 }
 
 .menu {
@@ -86,17 +137,18 @@ img {
 
 .menu a {
   display: block;
-  padding: 10px 14px;
+  padding: 0.625rem 0.875rem;
   color: #fff;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
 }
 
 .menu a:hover {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Чекбокс прячем визуально, но оставляем в DOM */
+/* Чекбокс прячем визуально, но оставляем в DOM и в порядке Tab:
+   фокус получает сам чекбокс, а рамку фокуса рисуем на label-бургере */
 .nav-toggle {
   position: absolute;
   opacity: 0;
@@ -107,19 +159,25 @@ img {
 /* Бургер-иконка из трёх полос: span + псевдоэлементы ::before и ::after */
 .nav-burger {
   display: none;
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   position: relative;
+}
+
+/* Видимый фокус на бургере, когда фокус у скрытого чекбокса */
+.nav-toggle:focus-visible + .nav-burger {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 .nav-burger-icon,
 .nav-burger-icon::before,
 .nav-burger-icon::after {
   position: absolute;
-  left: 10px;
-  width: 24px;
+  left: 0.625rem;
+  width: 1.5rem;
   height: 3px;
   background: #fff;
   border-radius: 2px;
@@ -133,85 +191,95 @@ img {
 
 .nav-burger-icon::before {
   left: 0;
-  top: -8px;
+  top: -0.5rem;
 }
 
 .nav-burger-icon::after {
   left: 0;
-  top: 8px;
+  top: 0.5rem;
 }
 
 /* ===== Первый экран ===== */
 .hero {
-  background: #eff6ff;
-  padding: 40px 0;
+  background: var(--color-hero);
+  padding: var(--section-padding) 0;
 }
 
 /* Flexbox: текст и картинка (направление меняется в медиазапросах) */
 .hero-inner {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: calc(var(--gap) * 2);
 }
 
 .hero h1 {
-  font-size: 32px;
+  font-size: var(--font-h1);
+}
+
+.hero p {
+  color: var(--color-muted);
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
 }
 
 .button {
   display: inline-block;
-  padding: 12px 24px;
-  background: #1d4ed8;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
   color: #fff;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-weight: 600;
 }
 
 .button:hover {
-  background: #1e40af;
+  background: var(--color-primary-dark);
 }
 
 /* ===== Разделы ===== */
 .section {
-  padding: 48px 0;
+  padding: var(--section-padding) 0;
 }
 
 .section-alt {
-  background: #f3f4f6;
-}
-
-.section h2 {
-  font-size: 28px;
+  background: var(--color-bg-alt);
 }
 
 /* ===== Карточки статей: CSS Grid (число колонок задаётся в медиазапросах) ===== */
 .cards {
   display: grid;
-  gap: 24px;
+  gap: calc(var(--gap) * 1.5);
 }
 
 .card {
   background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 .card-body {
-  padding: 20px;
+  padding: 1.25rem;
+}
+
+.card-body p {
+  color: var(--color-muted);
 }
 
 /* ===== Видео ===== */
 .videos {
   display: grid;
-  gap: 24px;
+  gap: calc(var(--gap) * 1.5);
 }
 
 .video-card {
   background: #fff;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  min-width: 0; /* чтобы содержимое не распирало колонку Grid */
+}
+
+.player-card {
+  margin-top: calc(var(--gap) * 1.5);
 }
 
 /* Резиновое видео 16:9: высота обёртки = 56.25% её ширины (9 / 16 = 0.5625) */
@@ -221,7 +289,7 @@ img {
   height: 0;
   padding-top: 56.25%;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background: #000;
 }
 
@@ -235,18 +303,88 @@ img {
   border: 0;
 }
 
+/* ===== Кастомный плеер ===== */
+.player {
+  max-width: 50rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #000;
+}
+
+.player video {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+/* Flexbox: панель управления плеером */
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  background: #111827;
+  color: #fff;
+}
+
+.player-controls button {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.player-controls button:hover {
+  background: #2563eb;
+}
+
+.player-progress {
+  flex: 1 1 auto;
+  min-width: 4rem;
+  accent-color: var(--color-accent);
+}
+
+.player-volume {
+  flex: 0 1 6rem;
+  min-width: 3rem;
+  accent-color: var(--color-accent);
+}
+
+.player-time {
+  flex: none;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ===== Подвал ===== */
 .site-footer {
   background: #111827;
   color: #d1d5db;
-  padding: 24px 0;
+  padding: 1.5rem 0;
   text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
 }
 
 /* =====================================================================
    БРЕЙКПОИНТ 1: max-width: 768px — планшеты и мобильные
    ===================================================================== */
 @media (max-width: 768px) {
+  /* Переменные для маленьких экранов: меньше отступы */
+  :root {
+    --gap: 0.75rem;
+    --section-padding: 2rem;
+    --header-height: 3.5rem;
+  }
+
   /* Показываем бургер-кнопку */
   .nav-burger {
     display: block;
@@ -256,15 +394,15 @@ img {
   .menu {
     display: none;
     position: absolute;
-    top: 64px;
+    top: var(--header-height);
     left: 0;
     right: 0;
-    background: #1e3a8a;
-    padding: 8px 16px 16px;
+    background: var(--color-primary-dark);
+    padding: 0.5rem var(--container-padding) 1rem;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 
-  /* Checkbox hack: чекбокс отмечен -> соседний .menu становится видимым */
+  /* Checkbox hack: чекбокс отмечен -> соседний .menu становится видимым (без JS) */
   .nav-toggle:checked ~ .menu {
     display: block;
   }
@@ -289,10 +427,19 @@ img {
     flex-direction: column-reverse;
   }
 
-  /* Grid: одна колонка карточек */
+  /* Grid: одна колонка карточек и видео */
   .cards,
   .videos {
     grid-template-columns: 1fr;
+  }
+
+  /* Flexbox: панель плеера переносится на две строки */
+  .player-controls {
+    flex-wrap: wrap;
+  }
+
+  .player-progress {
+    flex-basis: calc(100% - 3.25rem);
   }
 }
 
@@ -300,19 +447,21 @@ img {
    БРЕЙКПОИНТ 2: min-width: 769px — ноутбуки и десктопы
    ===================================================================== */
 @media (min-width: 769px) {
+  :root {
+    --gap: 1rem;
+    --section-padding: 4rem;
+    --container-padding: 1.5rem;
+  }
+
   /* Flexbox: пункты меню в одну строку */
   .menu {
     display: flex;
-    gap: 4px;
+    gap: 0.25rem;
   }
 
   /* Flexbox: текст и картинка рядом, по половине ширины */
   .hero-inner > * {
     flex: 1 1 0;
-  }
-
-  .hero h1 {
-    font-size: 44px;
   }
 
   /* Grid: три колонки карточек */
@@ -323,5 +472,28 @@ img {
   /* Grid: два видео рядом */
   .videos {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =====================================================================
+   БРЕЙКПОИНТ 3 (бонус): 769px–1024px — планшеты в альбомной ориентации,
+   небольшие ноутбуки. Карточкам тесно в 3 колонки — делаем 2.
+   ===================================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =====================================================================
+   БРЕЙКПОИНТ 4 (бонус): min-width: 1440px — большие мониторы.
+   Шире контейнер, больше отступы и базовый шрифт.
+   ===================================================================== */
+@media (min-width: 1440px) {
+  :root {
+    --font-base: 1.125rem;
+    --gap: 1.5rem;
+    --section-padding: 5rem;
+    --container-max: 85rem;
   }
 }

@@ -50,21 +50,21 @@
         <!-- Адаптивная сетка карточек: 1 колонка на мобильном, 3 на десктопе (см. .cards в style.css) -->
         <div class="cards">
           <article class="card">
-            <img src="media/flexbox.svg" alt="Три блока, выстроенные в ряд внутри flex-контейнера" width="800" height="500">
+            <img src="media/flexbox.svg" alt="Три блока, выстроенные в ряд внутри flex-контейнера" width="800" height="500" loading="lazy">
             <div class="card-body">
               <h3>Flexbox за 5 минут</h3>
               <p>Flexbox раскладывает элементы вдоль одной оси. Свойства justify-content и align-items отвечают за выравнивание, а flex-wrap позволяет переносить блоки на новую строку.</p>
             </div>
           </article>
           <article class="card">
-            <img src="media/grid.svg" alt="Блоки разного размера, расставленные по двумерной сетке" width="800" height="500">
+            <img src="media/grid.svg" alt="Блоки разного размера, расставленные по двумерной сетке" width="800" height="500" loading="lazy">
             <div class="card-body">
               <h3>CSS Grid: двумерная сетка</h3>
               <p>Grid управляет строками и столбцами одновременно. Запись repeat(auto-fit, minmax(…)) позволяет сетке самой решать, сколько колонок поместится на экране.</p>
             </div>
           </article>
           <article class="card">
-            <img src="media/media.svg" alt="Видеоплеер с кнопкой воспроизведения и полосой прогресса" width="800" height="500">
+            <img src="media/media.svg" alt="Видеоплеер с кнопкой воспроизведения и полосой прогресса" width="800" height="500" loading="lazy">
             <div class="card-body">
               <h3>Медиазапросы</h3>
               <p>Медиазапрос @media применяет стили только при выполнении условия, например при ширине экрана до 768px. Так один HTML-документ выглядит по-разному на телефоне и ноутбуке.</p>
@@ -84,11 +84,40 @@
             <div class="thumb-wrap">
               <iframe src="https://www.youtube.com/embed/tSyPT1YPOSA?autoplay=0&amp;mute=1&amp;controls=1&amp;rel=0"
                       title="Видео с YouTube: выступление эксперта РТУ МИРЭА"
+                      loading="lazy"
                       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen></iframe>
             </div>
           </article>
+          <article class="video-card">
+            <h3>Rutube</h3>
+            <!-- Второе видео из другого источника, тот же приём thumb-wrap -->
+            <div class="thumb-wrap">
+              <iframe src="https://rutube.ru/play/embed/e36b4a618236a0e45e677ae0145ba352?autoplay=0&amp;mute=1"
+                      title="Видео с Rutube: конференция UNOVUS 2024"
+                      loading="lazy"
+                      allow="clipboard-write; encrypted-media; picture-in-picture; screen-wake-lock"
+                      allowfullscreen></iframe>
+            </div>
+          </article>
         </div>
+
+        <article class="video-card player-card">
+          <h3>Собственный плеер (HTML5 video + JavaScript)</h3>
+          <!-- Видео лежит в проекте (media/demo.mp4); controls остаётся как запасной вариант без JS -->
+          <div class="player">
+            <video src="media/demo.mp4" poster="media/poster.jpg" preload="metadata" controls playsinline>
+              Ваш браузер не поддерживает видео HTML5.
+            </video>
+            <div class="player-controls">
+              <button type="button" class="player-play" aria-label="Воспроизвести">►</button>
+              <input type="range" class="player-progress" min="0" max="100" step="0.1" value="0" aria-label="Прогресс воспроизведения">
+              <span class="player-time" aria-live="off">0:00 / 0:00</span>
+              <button type="button" class="player-mute" aria-label="Выключить звук">🔊</button>
+              <input type="range" class="player-volume" min="0" max="1" step="0.05" value="1" aria-label="Громкость">
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -106,5 +135,7 @@
       <p>© 2026 Мурад Асланов, группа БСБО-23-24. Учебный проект.</p>
     </div>
   </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
