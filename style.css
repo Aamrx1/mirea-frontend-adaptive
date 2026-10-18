@@ -1,0 +1,327 @@
+/* ===== Базовые стили (mobile-first: общие для всех экранов) ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #ffffff;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+a {
+  color: #1d4ed8;
+}
+
+/* Адаптивные изображения: никогда не шире контейнера, высота по пропорциям */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ===== Шапка ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #1e3a8a;
+  color: #fff;
+}
+
+/* Flexbox: логотип слева, меню справа */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+}
+
+.logo {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #7dd3fc;
+}
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu a {
+  display: block;
+  padding: 10px 14px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.menu a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Чекбокс прячем визуально, но оставляем в DOM */
+.nav-toggle {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+/* Бургер-иконка из трёх полос: span + псевдоэлементы ::before и ::after */
+.nav-burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  border-radius: 6px;
+  position: relative;
+}
+
+.nav-burger-icon,
+.nav-burger-icon::before,
+.nav-burger-icon::after {
+  position: absolute;
+  left: 10px;
+  width: 24px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  content: "";
+}
+
+.nav-burger-icon {
+  top: 50%;
+  margin-top: -1.5px;
+}
+
+.nav-burger-icon::before {
+  left: 0;
+  top: -8px;
+}
+
+.nav-burger-icon::after {
+  left: 0;
+  top: 8px;
+}
+
+/* ===== Первый экран ===== */
+.hero {
+  background: #eff6ff;
+  padding: 40px 0;
+}
+
+/* Flexbox: текст и картинка (направление меняется в медиазапросах) */
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.hero h1 {
+  font-size: 32px;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #1d4ed8;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.button:hover {
+  background: #1e40af;
+}
+
+/* ===== Разделы ===== */
+.section {
+  padding: 48px 0;
+}
+
+.section-alt {
+  background: #f3f4f6;
+}
+
+.section h2 {
+  font-size: 28px;
+}
+
+/* ===== Карточки статей: CSS Grid (число колонок задаётся в медиазапросах) ===== */
+.cards {
+  display: grid;
+  gap: 24px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* ===== Видео ===== */
+.videos {
+  display: grid;
+  gap: 24px;
+}
+
+.video-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Резиновое видео 16:9: высота обёртки = 56.25% её ширины (9 / 16 = 0.5625) */
+.thumb-wrap {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 56.25%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #000;
+}
+
+/* iframe абсолютно занимает всю обёртку, поэтому не ломает вёрстку на узком экране */
+.thumb-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ===== Подвал ===== */
+.site-footer {
+  background: #111827;
+  color: #d1d5db;
+  padding: 24px 0;
+  text-align: center;
+}
+
+/* =====================================================================
+   БРЕЙКПОИНТ 1: max-width: 768px — планшеты и мобильные
+   ===================================================================== */
+@media (max-width: 768px) {
+  /* Показываем бургер-кнопку */
+  .nav-burger {
+    display: block;
+  }
+
+  /* Меню по умолчанию скрыто (display: none убирает ссылки и из порядка Tab) */
+  .menu {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: #1e3a8a;
+    padding: 8px 16px 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Checkbox hack: чекбокс отмечен -> соседний .menu становится видимым */
+  .nav-toggle:checked ~ .menu {
+    display: block;
+  }
+
+  /* Иконка превращается в крестик, когда меню открыто */
+  .nav-toggle:checked + .nav-burger .nav-burger-icon {
+    background: transparent;
+  }
+
+  .nav-toggle:checked + .nav-burger .nav-burger-icon::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  .nav-toggle:checked + .nav-burger .nav-burger-icon::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  /* Flexbox: на мобильном текст и картинка идут друг под другом */
+  .hero-inner {
+    flex-direction: column-reverse;
+  }
+
+  /* Grid: одна колонка карточек */
+  .cards,
+  .videos {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================================
+   БРЕЙКПОИНТ 2: min-width: 769px — ноутбуки и десктопы
+   ===================================================================== */
+@media (min-width: 769px) {
+  /* Flexbox: пункты меню в одну строку */
+  .menu {
+    display: flex;
+    gap: 4px;
+  }
+
+  /* Flexbox: текст и картинка рядом, по половине ширины */
+  .hero-inner > * {
+    flex: 1 1 0;
+  }
+
+  .hero h1 {
+    font-size: 44px;
+  }
+
+  /* Grid: три колонки карточек */
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Grid: два видео рядом */
+  .videos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

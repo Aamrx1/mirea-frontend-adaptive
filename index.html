@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <!-- Обязательный viewport: без него мобильный браузер покажет «десктопную» страницу в уменьшенном виде -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Учебный адаптивный сайт о приёмах современной вёрстки">
+  <title>Адаптивный веб: учебный блог</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top">Adaptive<span>Web</span></a>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <!-- Бургер-меню на чекбоксе (checkbox hack): состояние «открыто/закрыто» хранит сам чекбокс, JS не нужен -->
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-controls="menu">
+        <label for="nav-toggle" class="nav-burger">
+          <span class="nav-burger-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Открыть меню</span>
+        </label>
+
+        <!-- Якорные ссылки на разделы страницы -->
+        <ul class="menu" id="menu">
+          <li><a href="#about">О проекте</a></li>
+          <li><a href="#articles">Статьи</a></li>
+          <li><a href="#video">Видео</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="about" aria-labelledby="about-title">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1 id="about-title">Один сайт для любого экрана</h1>
+          <p>Учебный проект по курсу «Frontend Development». Здесь собраны основные приёмы адаптивной вёрстки: медиазапросы, Flexbox, Grid, бургер-меню без JavaScript и резиновое встраивание видео.</p>
+          <a class="button" href="#articles">Читать статьи</a>
+        </div>
+        <img class="hero-image" src="media/hero.svg" alt="Схема браузерного окна с адаптивной сеткой блоков" width="800" height="500">
+      </div>
+    </section>
+
+    <section class="section" id="articles" aria-labelledby="articles-title">
+      <div class="container">
+        <h2 id="articles-title">Статьи</h2>
+        <!-- Адаптивная сетка карточек: 1 колонка на мобильном, 3 на десктопе (см. .cards в style.css) -->
+        <div class="cards">
+          <article class="card">
+            <img src="media/flexbox.svg" alt="Три блока, выстроенные в ряд внутри flex-контейнера" width="800" height="500">
+            <div class="card-body">
+              <h3>Flexbox за 5 минут</h3>
+              <p>Flexbox раскладывает элементы вдоль одной оси. Свойства justify-content и align-items отвечают за выравнивание, а flex-wrap позволяет переносить блоки на новую строку.</p>
+            </div>
+          </article>
+          <article class="card">
+            <img src="media/grid.svg" alt="Блоки разного размера, расставленные по двумерной сетке" width="800" height="500">
+            <div class="card-body">
+              <h3>CSS Grid: двумерная сетка</h3>
+              <p>Grid управляет строками и столбцами одновременно. Запись repeat(auto-fit, minmax(…)) позволяет сетке самой решать, сколько колонок поместится на экране.</p>
+            </div>
+          </article>
+          <article class="card">
+            <img src="media/media.svg" alt="Видеоплеер с кнопкой воспроизведения и полосой прогресса" width="800" height="500">
+            <div class="card-body">
+              <h3>Медиазапросы</h3>
+              <p>Медиазапрос @media применяет стили только при выполнении условия, например при ширине экрана до 768px. Так один HTML-документ выглядит по-разному на телефоне и ноутбуке.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="video" aria-labelledby="video-title">
+      <div class="container">
+        <h2 id="video-title">Видео</h2>
+        <div class="videos">
+          <article class="video-card">
+            <h3>YouTube</h3>
+            <!-- Обёртка thumb-wrap задаёт пропорции 16:9 через padding-top: 56.25%, iframe растягивается на неё -->
+            <div class="thumb-wrap">
+              <iframe src="https://www.youtube.com/embed/tSyPT1YPOSA?autoplay=0&amp;mute=1&amp;controls=1&amp;rel=0"
+                      title="Видео с YouTube: выступление эксперта РТУ МИРЭА"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacts" aria-labelledby="contacts-title">
+      <div class="container">
+        <h2 id="contacts-title">Контакты</h2>
+        <p>Учебный проект выполнен в рамках практического задания 3-4. Исходный код открыт на GitHub.</p>
+        <p><a href="https://github.com/Aamrx1/mirea-frontend-adaptive">github.com/Aamrx1/mirea-frontend-adaptive</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Мурад Асланов, группа БСБО-23-24. Учебный проект.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>
+<rect width="800" height="500" fill="url(#g)"/>
+<rect x="110" y="140" width="580" height="200" rx="16" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="14 10"/><rect x="140" y="170" width="160" height="140" rx="12" fill="#fff" opacity=".9"/><rect x="320" y="170" width="160" height="140" rx="12" fill="#fff" opacity=".7"/><rect x="500" y="170" width="160" height="140" rx="12" fill="#fff" opacity=".5"/><path d="M150 100 H650" stroke="#fff" stroke-width="6"/><path d="M630 85 L655 100 L630 115" fill="none" stroke="#fff" stroke-width="6"/>
+<text x="400" y="440" font-family="Arial, sans-serif" font-size="44" font-weight="700" fill="#fff" text-anchor="middle">Flexbox</text>
+</svg>
